@@ -4,10 +4,30 @@
         <title>
             Templating
         </title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <h2>
-            Today its <%= actualDay %>
-        </h2>
+        <div class="box" id="heading">
+          <h1>  Today its <%= actualDay %> </h1>
+        </div>
+
+        <div class="box">
+            <% newListItems.forEach((valor)=>{ %>
+                <div class="item">
+                    <input type="checkbox">
+                    <p>
+                        <%= valor %>
+                    </p>
+                </div>
+             <%  }) %>
+
+             <form action="/" method="post">
+                <input type="text" name="nextItem" placeholder="New Item" autocomplete="off">
+                <button type="submit">+</button>
+            </form>
+
+        </div>
+
+       
     </body>
 </html>

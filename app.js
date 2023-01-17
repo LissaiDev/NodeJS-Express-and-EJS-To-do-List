@@ -4,42 +4,27 @@ const bodyParser = require('body-parser')
 const app=express()
 app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine','ejs')
+app.use(express.static('public'))
 
+let Items = []
 
 app.get('/',(req,res)=>{
-    
-    let date = new Date()
-    let day = date.getDay()
-
-    switch (day){
-        case 0:
-            day= 'Sunday'
-            break
-        case 1:
-            day= 'Monday'
-            break
-        case 2:
-            day= 'Sunday'
-            break
-        case 3:
-            day= 'Monday'
-            break
-        case 4:
-            day= 'Sunday'
-            break
-        case 5:
-            day= 'Monday'
-            break
-        case 6:
-            day= 'Saturday'
-            break
-        default:
-            (console.log("Impossible"))
-        
+    let options = {
+        weekday : 'long',
+        day : 'numeric',
+        month : 'long'
     }
-    
-    res.render('list',{actualDay : day})
+    let date = new Date()
+    let day = date.toLocaleDateString('en-US',options)
+    res.render('list',{
+        actualDay : day,
+        newListItems : Items
+    })
+})
 
+app.post('/',(req,res)=>{
+    Items.push(req.body.nextItem)
+    res.redirect('/')
 })
 
 
